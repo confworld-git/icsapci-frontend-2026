@@ -1,0 +1,77 @@
+.guidelines {
+  overflow-x: clip;
+}
+
+.guidelines > img {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.guidelines > h1 {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  font-size: 40px;
+  background-image: url(../../assets/psg-back.jfif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #f6fff1;
+  color: white;
+  text-shadow: 2px 2px 8px black;
+}
+
+.guide-list {
+  margin: 40px;
+}
+
+.guide-list > :nth-child(5) {
+  columns: 350px;
+  list-style: none;
+}
+
+.guide-list > :nth-child(2) {
+  columns: 400px;
+  list-style: none;
+}
+
+.guide-list > ul > li {
+  padding: 20px;
+  background-color: rgb(224, 240, 254);
+  margin-bottom: 15px;
+  color: black;
+}
+
+.guide-list > :nth-child(4) > li {
+  background-color: #def8cf;
+}
+
+.full {
+  margin-top: 40px;
+}
+
+.guide-list>h1{
+  color: #6a8d00;
+}
+
+@media screen and (max-width: 1000px) {
+  .guidelines > h1 {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .guide-list {
+    margin: 0px;
+    padding: 20px;
+  }
+  .guide-list > ul {
+    padding-left: 0px;
+  }
+}

@@ -1,0 +1,75 @@
+.policies-container {
+  padding: 20px 20px 20px 50px;
+  max-width: 800px;
+  margin: 10px auto 40px auto;
+  line-height: 1.6;
+  border-left: 4px solid #8bb314;
+}
+
+.policies-container > h1 {
+  color: #8bb314;
+  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.policies-container > h2 {
+  color: #ed8c24;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 550;
+}
+
+.policies-container > p,
+.policies-container > ul {
+  margin: 14px 0;
+  font-size: 15px;
+  text-align: justify;
+}
+
+.policies-container > p > span {
+  font-weight: bold;
+}
+
+.policies-container > p > svg {
+  color: #714fbf;
+  font-size: 20px;
+  animation: point 1s ease-in-out infinite alternate;
+  margin-bottom: -5px;
+}
+
+@keyframes point {
+  0% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.policies-container > ul {
+  padding-left: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+  .Instruction > img {
+    height: 300px;
+    object-position: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .policies-container {
+    padding: 10px;
+  }
+  .policies-container > h1 {
+    font-size: 1.5em;
+  }
+  .policies-container > h2 {
+    font-size: 1.2em;
+  }
+  .Instruction-details {
+    margin: 15px;
+  }
+}

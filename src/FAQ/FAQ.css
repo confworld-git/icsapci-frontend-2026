@@ -1,0 +1,50 @@
+.faq > img {
+  /* height: 500px; */
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  background-color: #d9d9d7;
+}
+
+.faq > section > div {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #f0fce9;
+  transition: 0.6s ease-in-out all;
+}
+
+.faq > section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin: 40px;
+  transition: 0.6s ease-in-out all;
+}
+
+.faq > section > div > h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.faq > section > div > h1:hover ~ p {
+  display: block;
+}
+
+.faq > section > div > p {
+  font-size: 15px;
+  /* display: none; */
+}
+
+@media screen and (max-width: 1000px) {
+  .faq > img {
+    height: 300px;
+    object-position: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .faq > section {
+    margin: 20px;
+  }
+}

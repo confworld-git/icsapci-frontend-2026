@@ -1,0 +1,1055 @@
+.cash {
+  width: 40%;
+  padding: 30px;
+  margin: 20px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 10px;
+  background: linear-gradient(45deg, #0caceb, #adbc26);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.cash > label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: white;
+}
+
+#reg-radio > label {
+  display: flex;
+  flex-direction: row;
+}
+
+.cash > button {
+  padding: 10px;
+  width: 100%;
+  margin-top: 20px;
+  background-color: #00c358;
+  backdrop-filter: blur(8px);
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.cash > label > input {
+  background-color: rgba(255, 255, 255, 0.927);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 10px;
+  color: #00a44a;
+}
+
+.cash > label > input::placeholder {
+  font-weight: 450;
+  font-size: 14px;
+}
+
+.register {
+  overflow-x: clip;
+}
+
+.register > img {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  object-position: 0px -60px;
+}
+
+.register > h1 {
+  font-size: 30px;
+  text-align: center;
+  color: #6a8d00;
+}
+
+.register > p {
+  font-size: 16px;
+  text-align: center;
+}
+
+.register > h3 {
+  background-color: #fc8a15;
+  color: white;
+  font-weight: 500;
+  padding: 4px 0px;
+  margin: 50px 0px 0px 0px;
+}
+
+#reg-fee {
+  font-size: 25px;
+}
+
+.select-fee {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px;
+  gap: 10px;
+  position: relative;
+}
+
+.select-fee > p {
+  position: absolute;
+  bottom: -50px;
+  left: 6px;
+  color: red;
+}
+
+.select-fee > div {
+  flex: 1;
+  border-radius: 10px;
+  overflow: clip;
+}
+
+.select-fee > :nth-child(1) {
+  background-color: #f6f8cf;
+}
+
+.select-fee > :nth-child(1) > h1 {
+  background-color: #adbc26;
+  color: white;
+}
+
+.select-fee > :nth-child(2) > h1 {
+  background-color: #0caceb;
+  color: white;
+}
+
+.select-fee > :nth-child(2) {
+  background-color: #e0f3fe;
+}
+
+.select-fee > div > h1 {
+  font-size: 18px;
+  text-align: center;
+  margin: 0;
+  padding: 15px;
+}
+
+.select-fee > div > ul {
+  margin: 0;
+  padding: 10px 10px 10px 20px;
+  display: flex;
+  align-items: center;
+  text-wrap: wrap;
+  list-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.053);
+}
+
+.select-fee > div > ul > :nth-child(1) {
+  width: 40%;
+  text-wrap: wrap;
+}
+
+.select-fee > div > ul > :nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+
+.select-fee > div > ul > :nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+.select-fee > div > :nth-child(2) > li {
+  font-weight: 500;
+  font-size: 17px;
+}
+
+#disable {
+  text-decoration: line-through;
+}
+
+.select-fee > div > ul > li {
+  padding: 10px 0px;
+  font-size: 15px;
+  text-wrap: wrap;
+  cursor: pointer;
+}
+
+.select-fee > div > ul > li > span {
+  color: red;
+}
+
+.registration-reg {
+  margin: 20px 40px;
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 8px;
+  column-count: 2;
+  gap: 30px;
+  width: 60%;
+}
+
+.registration-reg-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.col {
+  flex-direction: column;
+}
+
+#reg-title {
+  text-align: center;
+  font-size: 26px;
+  margin-top: 20px;
+}
+
+.reg-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.reg-radio {
+  font-size: 15px;
+}
+
+.reg-label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.reg-input {
+  padding: 12px 10px;
+  background-color: #cccccc25;
+  border-radius: 4px;
+  border: none;
+  font-family: "poppins", sans-serif;
+  outline: none;
+  box-shadow: rgba(125, 125, 125, 0.108) 0px 4px 12px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.card-pay {
+  margin: 40px 60px;
+  padding: 20px;
+  background: linear-gradient(to right, #034342, #cd6305);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.progress-3 {
+  width: 100%;
+  height: 10px;
+  border-radius: 20px;
+  background: repeating-linear-gradient(
+        135deg,
+        #0000001b 0 10px,
+        #ffffff2e 0 20px
+      )
+      0/0% no-repeat,
+    repeating-linear-gradient(135deg, #ddd 0 10px, #eee 0 20px) 0/100%;
+  animation: p3 2s infinite;
+}
+
+@keyframes p3 {
+  100% {
+    background-size: 100%;
+  }
+}
+
+.submit-button {
+  padding: 12px;
+  background-color: #50cb8b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  font-family: "poppins", sans-serif;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+}
+
+#price-in {
+  background-color: white;
+}
+
+.submit-button:active {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.price {
+  color: rgb(88, 155, 40);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.available {
+  background-color: #f5f5f5;
+  padding: 20px 40px 100px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  position: relative;
+}
+
+.available > p {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.available > div {
+  flex: 1;
+}
+
+.available > div > p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.available > div > li {
+  padding: 10px;
+}
+
+.available > :nth-child(3) > p > :nth-child(1) {
+  font-weight: 600;
+}
+
+.available > :nth-child(3) > p > :nth-child(2) {
+  font-size: 15px;
+}
+
+.available > div > h1 {
+  font-size: 22px;
+}
+
+.Registration_steps {
+  margin: 100px 50px;
+}
+
+.Registration_steps > div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  background: linear-gradient(to right, #9bd142, #4cad97, #5bafbf, #3e9fdb);
+  border-radius: 10px;
+  height: 100px;
+}
+
+.Registration_steps > div > div {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.287) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  gap: 10px;
+  position: relative;
+}
+
+.Registration_steps > div > div::after {
+  content: "";
+  position: absolute;
+  height: 220px;
+  width: 220px;
+  border-radius: 50%;
+  border: 4px solid black;
+  z-index: -2;
+}
+
+.Registration_steps > div > :nth-child(1)::after {
+  border-color: #9bd142;
+}
+.Registration_steps > div > :nth-child(2)::after {
+  border-color: #4cad97;
+}
+.Registration_steps > div > :nth-child(3)::after {
+  border-color: #5bafbf;
+}
+.Registration_steps > div > :nth-child(4)::after {
+  border-color: #3e9fdb;
+}
+
+.Registration_steps > div > div > img {
+  height: 50px;
+}
+
+.Registration_steps > div > div > span {
+  font-weight: 700;
+  font-size: 20px;
+  font-family: "poppins", sans-serif;
+}
+
+.Registration_steps > div > div > p {
+  font-size: 13px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.claim-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  padding-bottom: 20px;
+}
+
+.claim-div > a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.claim-div > a > svg {
+  font-size: 20px;
+  color: green;
+}
+
+.claim-div > a > b {
+  color: green;
+}
+
+#claim {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 550;
+  color: blue;
+}
+
+@media (max-width: 1024px) {
+  .Registration_steps > div > div {
+    height: 170px;
+    width: 170px;
+  }
+
+  .Registration_steps > div > div::after {
+    height: 180px;
+    width: 180px;
+  }
+
+  .Registration_steps > div > div > img {
+    height: 40px;
+  }
+
+  .Registration_steps > div > div > span {
+    font-size: 18px;
+  }
+
+  .Registration_steps > div > div > p {
+    font-size: 12px;
+  }
+  .register > img {
+    height: 300px;
+    object-position: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .Registration_steps > div {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+    background: transparent;
+    gap: 50px;
+  }
+
+  .Registration_steps > div > div {
+    height: 200px;
+    width: 200px;
+  }
+
+  .Registration_steps > div > div::after {
+    height: 220px;
+    width: 220px;
+  }
+
+  .Registration_steps > div > div > img {
+    height: 30px;
+  }
+
+  .Registration_steps > div > div > span {
+    font-size: 16px;
+  }
+
+  .Registration_steps > div > div > p {
+    font-size: 11px;
+  }
+  .available {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .select-fee {
+    flex-direction: column;
+  }
+  .registration-reg-form {
+    flex-direction: column;
+    align-items: center;
+  }
+  .registration-reg {
+    width: calc(100% - 100px);
+    box-sizing: border-box;
+  }
+  .registration-reg > div > select {
+    width: calc(100% + 20px);
+  }
+  .registration-reg > div > input {
+    width: 100%;
+  }
+  .card-pay {
+    margin: 40px auto;
+  }
+  .available > p {
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+  }
+  .available {
+    padding: 20px 20px 100px 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .select-fee {
+    margin: 40px 20px;
+  }
+  .registration-reg {
+    margin: 20px 0px;
+    padding: 0px;
+    column-count: 1;
+  }
+  .Registration_steps {
+    margin: 40px;
+  }
+  .card-pay > p {
+    font-size: 14px;
+    text-align: center;
+  }
+  .card-pay > div > input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .card-pay {
+    margin: 0px auto 40px auto;
+  }
+  .select-fee > p {
+    position: relative;
+    margin-top: -50px;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .Registration_steps > div > div {
+    height: 160px;
+    width: 160px;
+  }
+
+  .Registration_steps > div > div::after {
+    height: 180px;
+    width: 180px;
+  }
+
+  .Registration_steps > div > div > img {
+    height: 25px;
+  }
+
+  .Registration_steps > div > div > span {
+    font-size: 14px;
+  }
+
+  .Registration_steps > div > div > p {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .reg-row {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .col {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .reg-label {
+    flex: 1;
+    padding-right: 10px;
+    margin-bottom: 0;
+    text-align: right;
+  }
+
+  .reg-input {
+    flex: 2;
+  }
+}
+
+.group_discount {
+  width: 100%;
+  background: #f0fff3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0px 10px 0px;
+}
+
+.coupon-card {
+  background: linear-gradient(135deg, #50cb8b, #007c3c);
+  /* background: linear-gradient(135deg, #7158fe, #9d4de6); */
+  color: #fff;
+  text-align: center;
+  padding: 40px 80px;
+  width: 70%;
+  border-radius: 15px;
+  position: relative;
+  z-index: 2;
+  overflow: clip;
+}
+
+.coupon-card > h1 {
+  /* color: blue; */
+  color: #ffd700;
+}
+
+.coupon-card li > svg {
+  font-size: 22px;
+  flex-shrink: 0;
+  color: #97ef0b;
+}
+
+.coupon-card li {
+  font-size: 18px;
+  padding: 8px;
+  list-style: none;
+  display: flex;
+  align-items: start;
+  text-align: justify;
+  gap: 10px;
+}
+
+.circle1,
+.circle2 {
+  background: #f0fff3;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.circle1 {
+  left: -25px;
+}
+.circle2 {
+  right: -25px;
+}
+
+.fireworks {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: -1;
+  opacity: 0.5;
+}
+.fireworks .firework {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  margin: 0px 50px;
+}
+/* .fireworks .firework:before {
+  content: "";
+  display: block;
+  border-radius: 5px;
+  background-color: #daa520;
+  width: 5px;
+  height: 0px;
+  will-change: transform;
+  transform: translateY(1000px);
+  animation: fireworkstart 3s ease-out infinite;
+} */
+.fireworks .firework .explosion {
+  position: absolute;
+  top: 0;
+  width: 5px;
+  height: 20px;
+  opacity: 0;
+  transform-origin: top center;
+  will-change: transform;
+  animation: explosion 0.7s linear infinite;
+}
+.fireworks .firework .explosion:nth-child(1) {
+  transform: rotate(0deg);
+}
+.fireworks .firework .explosion:nth-child(2) {
+  transform: rotate(90deg);
+}
+.fireworks .firework .explosion:nth-child(3) {
+  transform: rotate(180deg);
+}
+.fireworks .firework .explosion:nth-child(4) {
+  transform: rotate(-90deg);
+}
+.fireworks .firework .explosion:nth-child(5) {
+  transform: rotate(45deg);
+}
+.fireworks .firework .explosion:nth-child(6) {
+  transform: rotate(-45deg);
+}
+.fireworks .firework .explosion:nth-child(7) {
+  transform: rotate(135deg);
+}
+.fireworks .firework .explosion:nth-child(8) {
+  transform: rotate(225deg);
+}
+
+.fireworks .firework .explosion .spark {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  will-change: transform;
+  animation: explosion2 0.7s ease-in-out infinite;
+}
+
+.fireworks .firework .explosion .spark.silver {
+  background-color: #c0c0c0;
+}
+.fireworks .firework .explosion .spark.gold {
+  background-color: #daa520;
+}
+@keyframes fireworkstart {
+  0% {
+    height: 0px;
+    transform: translateY(1000px);
+  }
+  50% {
+    height: 50px;
+  }
+  75% {
+    height: 30px;
+  }
+  100% {
+    height: 0;
+    transform: translateY(0);
+  }
+}
+
+@keyframes explosion {
+  0% {
+    height: 0px;
+    opacity: 0;
+  }
+  50% {
+    height: 25px;
+    opacity: 1;
+  }
+  100% {
+    height: 0px;
+    opacity: 0;
+  }
+}
+@keyframes explosion2 {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  75% {
+    transform: translateY(50px);
+  }
+  100% {
+    transform: translateY(70px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .coupon-card {
+    width: 100%;
+    margin: 10px;
+    padding: 20px;
+  }
+  .coupon-card li {
+    text-align: start;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  .coupon-card > h1 {
+    font-size: 28px;
+  }
+}
+
+/* Add these new styles to your existing CSS */
+
+/* Membership Section */
+.membership-section {
+  padding: 20px;
+  border: 2px solid #8BB314;
+  border-radius: 10px;
+  background-color: #f9fff0;
+  margin-bottom: 20px;
+}
+
+.membership-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.membership-title {
+  color: #8BB314;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.membership-desc {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+.membership-fee {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background-color: #8BB314;
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* Coupon Section */
+.coupon-section {
+  padding: 20px;
+  border: 2px solid #8BB314;
+  border-radius: 10px;
+  background-color: #f9fff0;
+  margin-bottom: 20px;
+}
+
+.coupon-title {
+  color: #8BB314;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+}
+
+.coupon-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.coupon-input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: white;
+}
+
+.coupon-input:focus {
+  outline: none;
+  border-color: #8BB314;
+}
+
+.coupon-apply-btn {
+  padding: 10px 20px;
+  background-color: #8BB314;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 100px;
+  transition: background-color 0.3s;
+}
+
+.coupon-apply-btn:hover:not(:disabled) {
+  background-color: #7aa313;
+}
+
+.coupon-apply-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.coupon-applied {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #d4edda;
+  border-radius: 6px;
+}
+
+.coupon-success {
+  font-weight: bold;
+  color: #155724;
+  margin: 0 0 4px 0;
+}
+
+.coupon-desc {
+  font-size: 12px;
+  color: #155724;
+  margin: 0;
+}
+
+.coupon-remove-btn {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.coupon-remove-btn:hover {
+  background-color: #c82333;
+}
+
+/* Pricing Breakdown */
+.pricing-breakdown {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9fff0;
+  border-radius: 8px;
+}
+
+.pricing-title {
+  margin: 0 0 15px 0;
+  color: #8BB314;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pricing-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.pricing-row.discount {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.pricing-row.subtotal {
+  padding-top: 10px;
+  border-top: 2px solid #8BB314;
+  font-weight: 600;
+}
+
+.pricing-row.total {
+  padding-top: 10px;
+  border-top: 2px solid #8BB314;
+  font-size: 16px;
+  font-weight: bold;
+  color: #8BB314;
+}
+
+.savings-badge {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #d4edda;
+  border-radius: 6px;
+  color: #155724;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .membership-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .coupon-input-group {
+    flex-direction: column;
+  }
+
+  .coupon-apply-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,166 @@
+.session-tracks {
+  margin: 40px;
+}
+
+.session-tracks > h1 {
+  font-size: 32px;
+  color: #6a8d00;
+  text-align: center;
+}
+
+.session-tracks > p {
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.session {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.session > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-wrap: wrap;
+  height: 200px;
+  width: 320px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s ease-in-out background-position,
+    0.3s ease-in-out background-size;
+  background-size: cover;
+}
+
+.session > div > h1 {
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.211);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 2px 2px 5px black;
+  padding: 10px;
+  box-sizing: border-box;
+  text-wrap: wrap;
+}
+
+.session > div:hover {
+  background-position: 100% 100%;
+  /* background-size: 110%; */
+}
+
+.session-1 {
+  background-image: url(../../assets/Sessions/session1.jpg);
+  background-position: center;
+}
+
+.session-2 {
+  background-image: url(../../assets/Sessions/session2.jpg);
+  background-position: center;
+}
+
+.session-3 {
+  background-image: url(../../assets/Sessions/session3.jpg);
+  background-position: center;
+}
+
+.session-4 {
+  background-image: url(../../assets/Sessions/session4.jpg);
+  background-position: center;
+}
+
+.session-5 {
+  background-image: url(../../assets/Sessions/session5.jpg);
+  background-position: center;
+}
+
+.session-6 {
+  background-image: url(../../assets/Sessions/session6.jpg);
+  background-position: center;
+}
+
+.session-7 {
+  background-image: url(../../assets/Sessions/session7.jpg);
+  background-position: center;
+}
+
+.session-8 {
+  background-image: url(../../assets/Sessions/session8.jpg);
+  background-position: center;
+}
+
+.session-9 {
+  background-image: url(../../assets/Sessions/session9.jpg);
+  background-position: center;
+}
+
+.session-10 {
+  background-image: url(../../assets/Sessions/session10.jpg);
+  background-position: center;
+}
+
+.session-11 {
+  background-image: url(../../assets/Sessions/session11.jpg);
+  background-position: center;
+}
+
+.session-12 {
+  background-image: url(../../assets/Sessions/session12.jpg);
+  background-position: center;
+}
+
+.session-13 {
+  background-image: url(../../assets/Sessions/session13.jpg);
+  background-position: center;
+}
+
+.session-14 {
+  background-image: url(../../assets/Sessions/session14.jpg);
+  background-position: center;
+}
+
+.session-15 {
+  background-image: url(../../assets/Sessions/session15.jpg);
+  background-position: center;
+}
+
+.session-16 {
+  background-image: url(../../assets/Sessions/session16.jpg);
+  background-position: center;
+}
+
+.session-17 {
+  background-image: url(../../assets/Sessions/session17.jpg);
+  background-position: center;
+}
+
+.session-18 {
+  background-image: url(../../assets/Sessions/session18.jpg);
+  background-position: center;
+}
+
+.session-19 {
+  background-image: url(../../assets/Sessions/session19.jpg);
+  background-position: center;
+}
+
+.session-20 {
+  background-image: url(../../assets/Sessions/session20.jpg);
+  background-position: center;
+}
+
+@media screen and (max-width: 600px) {
+  .session-tracks {
+    margin: 40px 20px;
+  }
+}

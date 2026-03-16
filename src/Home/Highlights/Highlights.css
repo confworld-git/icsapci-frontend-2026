@@ -1,0 +1,59 @@
+.highlights {
+  margin: 40px;
+}
+
+.highlights > h1 {
+  text-align: center;
+  font-size: 32px;
+  color: #6a8d00;
+  
+}
+
+.highlights > section {
+  columns: 400px;
+  margin: 40px 0px;
+}
+
+.highlights > section > :nth-child(odd) {
+  background-color: #bee0ff;
+}
+
+.highlights > section > :nth-child(even) {
+  background-color: #ffdfa9;
+}
+
+.highlights > section > div {
+  padding: 14px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+
+.highlights > section > div > h1 {
+  font-size: 17px;
+  margin: 0;
+  padding: 0;
+  color: #6a8d00;
+  font-weight: bold;
+ 
+}
+
+.highlights > section > div > p {
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (min-width: 1700px) {
+  .highlights > section {
+    columns: 500px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .highlights {
+    margin: 40px 20px;
+  }
+}

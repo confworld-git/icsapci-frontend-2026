@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #ccc;
+  padding: 10;
+  background-color: rgb(228, 228, 228);
+
+  @media screen and (max-width: 480px) {
+    width: 50px;
+    padding: 0;
+  }
+  ul {
+    .active {
+      background-color: olivedrab;
+      color: white;
+      a{
+        border-left: 5px solid rgb(56, 83, 0);
+      }
+    }
+    li {
+      /* width: 100%;
+      height: auto; */
+
+      cursor: pointer;
+      /* border-radius: 5px; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &&:hover {
+        /* translate: 10px; */
+        transition: all 0.3s ease;
+        /* border-left: 5px solid rgb(56, 83, 0); */
+        background-color: olivedrab;
+        color: white;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 10px 10px 10px 20px;
+        border-left: 5px solid transparent;
+        span {
+          margin-left: 10px;
+          @media screen and (max-width: 480px) {
+            display: none;
+          }
+        }
+        &&:hover {
+          border-left: 5px solid rgb(56, 83, 0);
+        }
+        @media screen and (max-width: 480px) {
+          padding: 10px;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

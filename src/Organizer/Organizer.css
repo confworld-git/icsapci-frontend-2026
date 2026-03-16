@@ -1,0 +1,305 @@
+.about-cerada {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  overflow-x: clip;
+}
+
+.about-cerada > div {
+  flex: 1;
+}
+
+.about-cerada > img {
+  height: 500px;
+  flex: 1;
+  width: 100%;
+  object-fit: contain;
+}
+
+.about-cerada > div > h1 {
+  font-size: 40px;
+  color: #6a8d00;
+}
+
+.about-cerada > div > p {
+  font-size: 16px;
+  text-align: justify;
+}
+
+.mission {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+  margin: 20px 40px;
+  padding: 0px 0px 0px 20px;
+  border-radius: 20px;
+  overflow: clip;
+  gap: 50px;
+}
+
+.vision {
+  flex-direction: row-reverse;
+  gap: 50px;
+  padding-left: 0px;
+}
+
+.mission > div > h4 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  color: #6a8d00;
+  padding: 0px;
+  font-family: "Sora", system-ui;
+}
+
+.mission > div > p {
+  font-size: 16px;
+  text-align: justify;
+  line-height: 24px;
+}
+
+.mission > div > img {
+  height: 260px;
+}
+
+.what-we {
+  margin: 50px 40px 20px 40px;
+}
+
+.what-we > h1 {
+  font-size: 35px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 0;
+  color: #6a8d00;
+}
+
+.what-we > p {
+  text-align: center;
+}
+
+.what-we > div {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.what-we > div > p {
+  width: 400px;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 0px 0px 20px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  line-height: 20px;
+  background-color: #8bb314;
+  color: white;
+  position: relative;
+  z-index: 1;
+  overflow: clip;
+}
+
+.what-we > div > p::before {
+  position: absolute;
+  content: "";
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.146) 100%
+  );
+  z-index: -1;
+  height: 380px;
+  width: 380px;
+  transform: rotate(-45deg);
+  animation: shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/*   background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0.02) 100%
+  ); */
+
+@keyframes shine {
+  0% {
+    transform: translate(-150%, -150%) rotate(-45deg);
+  }
+  100% {
+    transform: translate(150%, 150%) rotate(-45deg);
+  }
+}
+
+.cerada-links {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40px 40px 40px 40px;
+  background-color: #f5f5f5;
+}
+
+.visit-our {
+  padding: 20px 0px 0px 40px;
+  background-color: #f5f5f5;
+  margin: 0;
+  color: #6a8d00;
+}
+
+.cerada-links > a {
+  padding: 10px 16px;
+  cursor: pointer;
+  color: white;
+  margin: 0;
+  border-radius: 6px;
+  transition: 0.5s ease-in-out all;
+  height: 26px;
+  width: 200px;
+  display: block;
+}
+
+.cerada-links > a > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 500px;
+  font-size: 13px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  background-color: white;
+  color: black;
+  padding: 6px 10px;
+}
+
+.cerada-links > a > span > svg {
+  font-size: 20px;
+  background-color: rgb(2, 0, 132);
+  border-radius: 50%;
+  padding: 4px;
+  overflow: visible;
+}
+
+.cerada-links > a:hover {
+  height: 160px;
+  width: 300px;
+}
+
+.cerada-links > a > span > svg {
+  color: white;
+}
+
+.cerada-links > a > span > svg {
+  animation: jump 0.98s ease-in-out infinite;
+  box-shadow: rgba(0, 0, 0, 0.412) 0px 4px 12px;
+}
+
+.cerada-links > a > span > svg > path {
+  animation: jump 1s ease-in-out infinite;
+}
+
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.cerada-links > :nth-child(1):hover {
+  background-image: url(../assets/web_1.png);
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.cerada-links > :nth-child(2):hover {
+  background-image: url(../assets/web_2.png);
+  background-position: top;
+  background-size: cover;
+}
+.cerada-links > :nth-child(3):hover {
+  background-image: url(../assets/web_3.png);
+  background-position: top;
+  background-size: cover;
+}
+.cerada-links > :nth-child(4):hover {
+  background-image: url(../assets/web_4.png);
+  background-position: top;
+  background-size: cover;
+}
+
+@media screen and (max-width: 1050px) {
+  .what-we > div {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .about-cerada {
+    flex-direction: column;
+  }
+  .cerada-links > :nth-child(1) {
+    background-image: url(../assets/web_1.png);
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .cerada-links > :nth-child(2) {
+    background-image: url(../assets/web_2.png);
+    background-position: top;
+    background-size: cover;
+  }
+  .cerada-links > :nth-child(3) {
+    background-image: url(../assets/web_3.png);
+    background-position: top;
+    background-size: cover;
+  }
+  .cerada-links > :nth-child(4) {
+    background-image: url(../assets/web_4.png);
+    background-position: top;
+    background-size: cover;
+  }
+  .cerada-links {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .cerada-links > a {
+    height: 160px;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .mission {
+    flex-direction: column;
+    padding: 20px;
+  }
+  .mission > :nth-child(2) {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mission > div > img {
+    height: 200px;
+  }
+  .about-cerada {
+    padding: 0px 20px 20px 20px;
+  }
+  .mission {
+    margin: 40px 20px;
+  }
+  .what-we {
+    margin: 40px 20px;
+  }
+}

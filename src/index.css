@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100..800&display=swap");
+
+body {
+  font-family: "Lexend", system-ui;
+  margin: 0;
+  padding: 0;
+  color: #001d35;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h1 {
+  font-family: "Sora", system-ui;
+}
+
+h1 > span {
+  color: #007c3c;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.note {
+  background-color: #fc8a15;
+  padding: 8px 0px;
+  margin: 0px;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+}
+
+/* src/components/PaymentSuccess.css */
+.payment-success-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fafdff;
+  overflow: hidden;
+}
+
+.svg-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.svgrepo.com/show/331702/payment-method.svg")
+    no-repeat;
+  background-size: contain;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.payment-success-content {
+  text-align: center;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.success-icon {
+  color: #28a745;
+  font-size: 5rem;
+  margin-bottom: 20px;
+  animation: bounce 2s infinite;
+}
+
+.payment-success-content > h1 {
+  color: #28a745;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.payment-success-content > p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.go-back-btn {
+  padding: 12px 30px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: "poppins", sans-serif;
+}
+
+.go-back-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.span-n {
+  color: blue;
+}
+
+#google_translate_element .goog-te-gadget {
+  font-size: 0px !important;
+}
+
+#google_translate_element .goog-te-gadget span {
+  display: none;
+}
+
+.goog-logo-link,
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+#google_translate_element .goog-te-combo {
+  padding: 5px;
+  font-family: "poppins", sans-serif;
+  outline: none;
+  cursor: pointer;
+  background-color: white;
+  font-size: 14px;
+  width: 150px;
+  border: 0;
+  font-weight: 450;
+}
+
+@media screen and (max-width: 980px) {
+  #google_translate_element {
+    display: none;
+  }
+}

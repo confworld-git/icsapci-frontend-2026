@@ -1,0 +1,162 @@
+.call-for-paper {
+  box-sizing: border-box;
+}
+
+.call-for-paper > div {
+  background-image: url(../assets/st-back.jpg);
+  background-repeat: no-repeat;
+  background-position: 0px -300px;
+  background-size: cover;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f6fff1;
+  color: white;
+  gap: 10px;
+  text-shadow: 2px 2px 5px black;
+}
+
+.call-for-paper > div > h1 {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+}
+
+.call-for-paper > div > p {
+  text-align: center;
+  width: 70%;
+  margin: 0;
+  padding: 0;
+}
+
+.call-for-paper > section {
+  margin: 60px 40px 40px 40px;
+}
+
+.topics {
+  box-sizing: border-box;
+  padding: 40px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.topics > div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 40px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.topics > :nth-child(odd) {
+  flex-direction: row-reverse;
+}
+
+.topics > div > img {
+  width: 50%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 50px;
+  object-position: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.topics > div > ul {
+  box-sizing: border-box;
+  width: 50%;
+  list-style: none;
+}
+
+.topics > :nth-child(odd) > ul {
+  padding-left: 20px;
+}
+
+.topics > :nth-child(even) > ul {
+  padding-left: 0px;
+}
+
+.topics > div > ul > p {
+  font-size: 20px;
+  font-weight: 550;
+  background-color: rgb(88, 160, 17);
+  padding: 10px;
+  color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.topics > :nth-child(odd) > ul > p {
+  margin-left: -20px;
+}
+
+.topics > div > ul > li {
+  font-size: 16px;
+  padding: 10px 0px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 450;
+}
+
+.topics > div > ul > li > svg {
+  font-size: 22px;
+  color: rgb(203, 207, 14);
+}
+
+@media screen and (max-width: 1070px) {
+  .call-for-paper > div {
+    background-position: center;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .topics > div {
+    flex-direction: column;
+  }
+  .topics > :nth-child(odd) {
+    flex-direction: column;
+  }
+  .topics > div > img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .topics > div > ul {
+    width: 100%;
+  }
+  .topics > :nth-child(odd) > ul > p {
+    margin-top: 0px;
+  }
+  .topics > :nth-child(even) > ul {
+    padding-left: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topics {
+    padding: 20px;
+  }
+  .call-for-paper > section {
+    margin: 0;
+  }
+  .topics > div > img {
+    width: 100%;
+    height: auto;
+  }
+  .topics > div {
+    border-radius: 15px;
+  }
+  .topics > div > img {
+    border-radius: 20px;
+    padding: 10px;
+  }
+  .topics > div > ul {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

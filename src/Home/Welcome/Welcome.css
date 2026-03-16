@@ -1,0 +1,86 @@
+.welcome {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.welcome > h1 {
+  font-size: 34px;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #006f39;
+}
+
+.welcome > h3 {
+  font-size: 20px;
+  font-weight: 450;
+  margin: 0;
+  padding: 0;
+
+}
+
+.welcome > div {
+  column-count: 2;
+  margin-top: 15px;
+  gap: 50px;
+}
+
+.welcome > div > p {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: justify;
+}
+
+.welcome > p {
+  margin: 15px 0px 0px 0px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: justify;
+}
+
+.theme {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px;
+  gap: 40px;
+  padding: 20px;
+  /* background-color: #f0fce9; */
+  background-color: #def8cf;
+}
+
+.theme > img {
+  flex: 1;
+  height: 440px;
+  border-radius: 4px;
+  width: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.theme-II {
+  /* background-color: #fcf5f4; */
+  background-color: #f9e9e7;
+  flex-direction: row-reverse;
+}
+
+@media screen and (max-width: 900px) {
+  .theme {
+    flex-direction: column;
+  }
+  .theme > img {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .theme {
+    margin: 40px 20px;
+  }
+}

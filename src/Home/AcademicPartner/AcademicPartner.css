@@ -1,0 +1,47 @@
+.ac-partner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0px 50px 0px;
+}
+
+.ac-partner > h1 {
+  text-align: center;
+  font-size: 30px;
+  color: #074f9c;
+}
+
+.ac-partner > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.ac-partner > div > div {
+  display: flex;
+  width: 400px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.ac-partner > div > div > img {
+  width: auto;
+  height: 200px;
+}
+
+.ac-partner > div > div > p {
+  font-size: 15px;
+  font-family: "poppins", sans-serif;
+  text-align: center;
+  background-color: orange;
+  color: #0a3b80;
+  font-weight: 550;
+  padding: 6px 2px;
+}

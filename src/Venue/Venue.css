@@ -1,0 +1,132 @@
+.venue {
+  margin: 10px 40px 40px 40px;
+}
+
+.venue > h1 {
+  font-size: 34px;
+  font-weight: 800;
+  text-align: center;
+  color: #007c3c;
+  margin-bottom: 0;
+}
+
+.venue > p {
+  text-align: center;
+  padding-bottom: 20px;
+  font-size: 17px;
+}
+.venue > p > span {
+  font-size: 25px;
+  font-weight: 650;
+  color: #29ce08;
+}
+
+.venue > h2 {
+  font-size: 18px;
+}
+
+.venue > section {
+  columns: 340px;
+  gap: 20px;
+}
+
+.venue > section > div {
+  overflow: clip;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.venue > section > div > img {
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: scale(1.04);
+  transition: 0.4s ease-in-out transform;
+}
+
+.venue > section > div:hover img {
+  transform: scale(1.15);
+}
+
+.venue-list {
+  position: relative;
+}
+
+.venue-list > p {
+  margin-bottom: 0;
+  padding: 2px 10px 2px 2px;
+  margin-top: 50px;
+  background-color: white;
+  width: fit-content;
+  color: black;
+  position: relative;
+  display: flex;
+  font-size: 13px;
+  z-index: 3;
+  align-items: center;
+  gap: 6px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  border-radius: 500px 500px;
+  position: absolute;
+  top: -40px;
+  left: 5px;
+  overflow: hidden;
+}
+
+.venue-list > p > i {
+  color: #8fbf00;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.visa {
+  padding: 20px;
+  margin: 40px 0px;
+  border-radius: 30px;
+  background-image: url(../assets/visa-v.jpg);
+  background-size: cover;
+  background-position: 0px -100px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 440px;
+  display: flex;
+  align-items: center;
+}
+
+.visa > div {
+  width: 40%;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+.visa > div > p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 950px) {
+  .visa > div {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .venue {
+    margin: 10px 20px 20px 20px;
+  }
+  .visa {
+    height: auto;
+    padding: 0px;
+  }
+  .visa > div {
+    padding: 0;
+  }
+}

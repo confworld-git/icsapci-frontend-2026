@@ -1,0 +1,131 @@
+
+
+
+.dashboard {
+  background-color: #f5f5f5;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.dashboard > h1 {
+  text-align: center;
+  margin: 0;
+  padding: 0px 0px 10px 0px;
+}
+
+.dashboard > section {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  gap: 40px;
+  min-height: 100vh;
+}
+
+.left {
+  padding: 0px 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.left > p {
+  padding: 10px 15px;
+  background-color: rgb(223, 255, 211);
+  border-radius: 500px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.4s ease-in-out all;
+}
+
+.left > p:hover {
+  background-color: #1ea100;
+  color: white;
+}
+
+#small > p {
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+.right {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 20px;
+  height: auto;
+  width: 100%;
+  box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #21b400;
+  text-align: left;
+  padding: 8px;
+}
+
+.data-table > thead > tr > th {
+  background-color: #1ea100;
+  color: white;
+  font-weight: 500;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.data-table td {
+  color: #000000;
+}
+
+.data-table {
+  font-family: "poppins", sans-serif;
+  font-size: 14px;
+}
+
+.data-table-reg {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.data-table-reg th,
+.data-table-reg td {
+  border: 1px solid #21b400;
+  text-align: left;
+  padding: 6px;
+  font-size: 11px;
+}
+
+.data-table-reg > thead > tr > th {
+  background-color: #1ea100;
+  color: white;
+  font-weight: 500;
+}
+
+.data-table-reg tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.data-table-reg td {
+  color: #000000;
+}
+
+.data-table-reg {
+  font-family: "poppins", sans-serif;
+  font-size: 14px;
+}
