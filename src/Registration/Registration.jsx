@@ -13,6 +13,8 @@ import Crack from "./Crack.jsx";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import axios from "axios";
 import { calculatePricing } from "../utils/pricingCalculator.js";
+import JournalSupport from "./JournalSupport.jsx";
+import Addons from "./Addons.jsx";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -21,13 +23,31 @@ const Registration = () => {
   const [tax, setTax] = useState(0);
   const [totalFee, setTotal] = useState(0);
   const [participantCategory, setParticipantCategory] = useState("");
-  
-  // New state for membership and coupon
+
+  // ── Journal & Addons state ──────────────────────────────────────
+  const [selectedJournal, setSelectedJournal] = useState(null);
+  const [selectedAddons, setSelectedAddons] = useState([]);
+
+  // Membership & coupon state
   const [hasMembership, setHasMembership] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponValidating, setCouponValidating] = useState(false);
   const [pricing, setPricing] = useState(null);
+
+  // Reset journal & addons when fee changes
+  useEffect(() => {
+    setSelectedJournal(null);
+    setSelectedAddons([]);
+  }, [selectedFee]);
+
+  // Recalculate when journal or addons change
+  useEffect(() => {
+    if (selectedFee) {
+      updatePricing(selectedFee, participantCategory, hasMembership, appliedCoupon);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedJournal, selectedAddons]);
 
   const handleFeeChange = (e) => {
     const fee = parseFloat(e.target.value);
@@ -38,13 +58,23 @@ const Registration = () => {
   const updatePricing = (amount, category, membership, coupon) => {
     if (!amount) return;
 
+    // Add journal and addons on top of the base fee
+    const journalAmount = selectedJournal?.specialPrice || 0;
+    const addonsAmount = selectedAddons.reduce((sum, a) => sum + a.price, 0);
+    const combinedBase = amount + journalAmount + addonsAmount;
+
     const calculations = calculatePricing({
-      baseAmount: amount,
+      baseAmount: combinedBase,
       participantCategory: category,
       hasMembership: membership,
       hasCoupon: !!coupon,
       currency: "USD",
     });
+
+    // Store breakdown extras
+    calculations.registrationBase = amount;
+    calculations.journalAmount = journalAmount;
+    calculations.addonsAmount = addonsAmount;
 
     setPricing(calculations);
     setTotal(calculations.total);
@@ -52,11 +82,10 @@ const Registration = () => {
   };
 
   const handleMembershipToggle = () => {
-    const newMembershipStatus = !hasMembership;
-    setHasMembership(newMembershipStatus);
-
+    const newStatus = !hasMembership;
+    setHasMembership(newStatus);
     if (selectedFee) {
-      updatePricing(selectedFee, participantCategory, newMembershipStatus, appliedCoupon);
+      updatePricing(selectedFee, participantCategory, newStatus, appliedCoupon);
     }
   };
 
@@ -65,20 +94,16 @@ const Registration = () => {
       toaster.warning("Please enter a coupon code");
       return;
     }
-
     if (!selectedFee) {
       toaster.warning("Please select a registration fee first");
       return;
     }
-
     setCouponValidating(true);
-
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_LINK}api/coupons/validate`,
         { code: couponCode }
       );
-
       if (response.data.success) {
         setAppliedCoupon(response.data.coupon);
         toaster.success(`Coupon "${couponCode}" applied successfully!`);
@@ -95,7 +120,6 @@ const Registration = () => {
   const handleCouponRemove = () => {
     setCouponCode("");
     setAppliedCoupon(null);
-
     if (selectedFee) {
       updatePricing(selectedFee, participantCategory, hasMembership, null);
     }
@@ -104,13 +128,11 @@ const Registration = () => {
   const handleParticipantCategoryChange = (e) => {
     const category = e.target.value;
     setParticipantCategory(category);
-
     if (selectedFee) {
       updatePricing(selectedFee, category, hasMembership, appliedCoupon);
     }
   };
 
-  const amount = totalFee;
   const currency = "USD";
 
   const paymentHandler = async (e) => {
@@ -128,19 +150,10 @@ const Registration = () => {
     });
 
     const requiredFields = [
-      "Title",
-      "first_name",
-      "last_name",
-      "certificate_name",
-      "DOB",
-      "nationality",
-      "department",
-      "institution",
-      "number",
-      "email",
-      "participant_category",
-      "presentation_Category",
-      "presentation_Type",
+      "Title", "first_name", "last_name", "certificate_name",
+      "DOB", "nationality", "department", "institution",
+      "number", "email", "participant_category",
+      "presentation_Category", "presentation_Type",
     ];
 
     for (const field of requiredFields) {
@@ -159,19 +172,39 @@ const Registration = () => {
           },
           FormData: formValues,
           pricingData: {
-            baseAmount: pricing.baseAmount,
+            // Base fee (fee table selection only)
+            baseAmount: selectedFee,
+
+            // Journal publication support
+            journalSupport: selectedJournal
+              ? {
+                  tier: selectedJournal.tier,
+                  package: selectedJournal.package,
+                  amount: selectedJournal.specialPrice,
+                }
+              : null,
+            journalAmount: pricing.journalAmount || 0,
+
+            // Add-ons
+            addons: selectedAddons.map((a) => ({
+              label: a.label,
+              sublabel: a.sublabel,
+              amount: a.price,
+            })),
+            addonsAmount: pricing.addonsAmount || 0,
+
+            // Discounts (applied to combined total)
             finalAmount: pricing.finalAmount,
-            hasMembership: hasMembership,
+            hasMembership,
             membershipFee: pricing.membershipFee,
             couponCode: appliedCoupon?.code || null,
             couponDiscount: pricing.couponDiscount,
             membershipDiscount: pricing.membershipDiscount,
           },
         }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       });
+
       const order = await response.json();
 
       var options = {
@@ -183,22 +216,16 @@ const Registration = () => {
         image: logo,
         order_id: order.id,
         handler: async function (response) {
-          const body = {
-            ...response,
-            Order_ID: order.id,
-          };
-
+          const body = { ...response, Order_ID: order.id };
           const validateRes = await fetch(
             `${import.meta.env.VITE_API_LINK}order/validate`,
             {
               method: "POST",
               body: JSON.stringify(body),
-              headers: {
-                "Content-Type": "application/json",
-              },
+              headers: { "Content-Type": "application/json" },
             }
           );
-          const jsonRes = await validateRes.json();
+          await validateRes.json();
           RegistrationFeeRef.current.reset();
           navigate("/Payment_Success");
         },
@@ -207,12 +234,8 @@ const Registration = () => {
           email: formValues.email,
           contact: formValues.number,
         },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#8BB314",
-        },
+        notes: { address: "Razorpay Corporate Office" },
+        theme: { color: "#8BB314" },
         modal: {
           ondismiss: async () => {
             const validateRes = await fetch(
@@ -220,23 +243,20 @@ const Registration = () => {
               {
                 method: "POST",
                 body: JSON.stringify({ Order_ID: order.id }),
-                headers: {
-                  "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
               }
             );
-            const jsonRes = await validateRes.json();
+            await validateRes.json();
             toaster.danger("Payment canceled.");
           },
         },
       };
-      var rzp1 = new window.Razorpay(options);
 
+      var rzp1 = new window.Razorpay(options);
       rzp1.on("payment.failed", function (response) {
         alert(response.error.description);
         alert(response.error.reason);
       });
-
       rzp1.open();
     } catch (error) {
       console.error("Payment processing failed:", error);
@@ -259,6 +279,8 @@ const Registration = () => {
       <h3>
         <marquee>Register now and take advantage of discounted rates.</marquee>
       </h3>
+
+      {/* Available Payment Methods */}
       <section className="available">
         <div data-aos="fade-right">
           <h1>Available Payment methods</h1>
@@ -274,154 +296,63 @@ const Registration = () => {
         </p>
         <div data-aos="fade-left">
           <h1>Bank Details (For Bank Transfer)</h1>
-          <p>
-            <span>Beneficiary Name:</span>
-            <span>
-              CONFWORLD EDUCATIONAL RESEARCH AND DEVELOPMENT ASSOCIATION
-            </span>
-          </p>
-          <p>
-            <span>Bank Name:</span>
-            <span>HDFC Bank</span>
-          </p>
-          <p>
-            <span>Account Number:</span>
-            <span>50200097123575</span>
-          </p>
-          <p>
-            <span>IFSC Code:</span>
-            <span>HDFC0000124</span>
-          </p>
-          <p>
-            <span>Swift Code:</span>
-            <span>HDFCINBBCHE</span>
-          </p>
-          <p>
-            <span>Branch:</span>
-            <span>Kilpauk, Chennai, Tamil Nadu, India</span>
-          </p>
+          <p><span>Beneficiary Name:</span><span>CONFWORLD EDUCATIONAL RESEARCH AND DEVELOPMENT ASSOCIATION</span></p>
+          <p><span>Bank Name:</span><span>HDFC Bank</span></p>
+          <p><span>Account Number:</span><span>50200097123575</span></p>
+          <p><span>IFSC Code:</span><span>HDFC0000124</span></p>
+          <p><span>Swift Code:</span><span>HDFCINBBCHE</span></p>
+          <p><span>Branch:</span><span>Kilpauk, Chennai, Tamil Nadu, India</span></p>
         </div>
       </section>
+
+      {/* Registration Steps */}
       <h1 data-aos="fade-up">Registration Steps</h1>
       <section className="Registration_steps" data-aos="fade-up">
         <div>
-          <div>
-            <span>01 Step</span>
-            <img src={step1} alt="" />
-            <p>
-              Choose Your Preferred
-              <br />
-              Admittance Category
-            </p>
-          </div>
-          <div>
-            <span>02 Step</span>
-            <img src={step2} alt="" />
-            <p>
-              Enter your
-              <br />
-              details in the form.
-            </p>
-          </div>
-          <div>
-            <span>03 Step</span>
-            <img src={step3} alt="" />
-            <p>
-              Proceed to
-              <br />
-              Payment Gateway
-            </p>
-          </div>
-          <div>
-            <span>04 Step</span>
-            <img src={step4} alt="" />
-            <p>Get an official conference invitation letter.</p>
-          </div>
+          <div><span>01 Step</span><img src={step1} alt="" /><p>Choose Your Preferred<br />Admittance Category</p></div>
+          <div><span>02 Step</span><img src={step2} alt="" /><p>Enter your<br />details in the form.</p></div>
+          <div><span>03 Step</span><img src={step3} alt="" /><p>Proceed to<br />Payment Gateway</p></div>
+          <div><span>04 Step</span><img src={step4} alt="" /><p>Get an official conference invitation letter.</p></div>
         </div>
       </section>
+
+      {/* Membership claim */}
       <div className="claim-div" data-aos="fade-up">
-        <p id="claim">
-          Claim a 5% discount on registration with CERADA's exclusive Premium
-          Membership
-        </p>
-        <a href="https://confworld.org/Student-Membership" target="_blank">
-          <FaLink />
-          <b>Student</b>
-        </a>
-        <a href="https://confworld.org/Professional-Membership" target="_blank">
-          <FaLink />
-          <b>Professional</b>
-        </a>
+        <p id="claim">Claim a 5% discount on registration with CERADA's exclusive Premium Membership</p>
+        <a href="https://confworld.org/Student-Membership" target="_blank"><FaLink /><b>Student</b></a>
+        <a href="https://confworld.org/Professional-Membership" target="_blank"><FaLink /><b>Professional</b></a>
       </div>
-      <div
-        className="group_discount"
-        data-aos="fade-up"
-        data-aos-anchor-placement="top-bottom"
-      >
+
+      {/* Group Discount */}
+      <div className="group_discount" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
         <div className="coupon-card">
-          <h1>Group Discount </h1>
+          <h1>Group Discount</h1>
           <Crack />
-          <li>
-            <FaRegCircleCheck />
-            You qualify for a discounted registration fee if you are a group of
-            5 members or more individuals or if you are a co-author of a paper
-            presentation.
-          </li>
-          <li>
-            <FaRegCircleCheck />
-            If your group consists of more than 10 members, please reach out to
-            our Academic Partnership Team to discuss a higher discount
-            percentage on the registration fee.
-          </li>
+          <li><FaRegCircleCheck />You qualify for a discounted registration fee if you are a group of 5 members or more individuals or if you are a co-author of a paper presentation.</li>
+          <li><FaRegCircleCheck />If your group consists of more than 10 members, please reach out to our Academic Partnership Team to discuss a higher discount percentage on the registration fee.</li>
           <div className="circle1"></div>
           <div className="circle2"></div>
         </div>
       </div>
-      <div
-        className="group_discount"
-        data-aos="fade-up"
-        data-aos-anchor-placement="top-bottom"
-      >
+
+      {/* Multiple Papers */}
+      <div className="group_discount" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
         <div className="coupon-card">
           <h1>If you are presenting more than one paper</h1>
           <Crack />
-          <li>
-            <FaRegCircleCheck />
-            An author may submit and present a maximum of 3 papers at the
-            conference.
-          </li>
-          <li>
-            <FaRegCircleCheck />
-            If you are presenting more than one paper at the conference, full
-            payment is required for the first paper.
-          </li>
-          <li>
-            <FaRegCircleCheck />
-            If other papers are oral or poster presentations, an additional fee
-            of 150 USD will be charged for each paper.
-          </li>
-          <li>
-            <FaRegCircleCheck />
-            If any of the papers requires scopus publication then you have to
-            pay the publication fee for each paper.
-          </li>
-          <li>
-            <FaRegCircleCheck />
-            If you have more than 3 papers, the additional paper can be
-            presented by a co-authors on full registration.
-          </li>
-          <li>
-            <FaRegCircleCheck />
-            Confirmation on the number of papers should be given to the
-            Conference co-ordinator 3 weeks prior to the final payment deadline.
-          </li>
+          <li><FaRegCircleCheck />An author may submit and present a maximum of 3 papers at the conference.</li>
+          <li><FaRegCircleCheck />If you are presenting more than one paper at the conference, full payment is required for the first paper.</li>
+          <li><FaRegCircleCheck />If other papers are oral or poster presentations, an additional fee of 150 USD will be charged for each paper.</li>
+          <li><FaRegCircleCheck />If any of the papers requires scopus publication then you have to pay the publication fee for each paper.</li>
+          <li><FaRegCircleCheck />If you have more than 3 papers, the additional paper can be presented by a co-authors on full registration.</li>
+          <li><FaRegCircleCheck />Confirmation on the number of papers should be given to the Conference co-ordinator 3 weeks prior to the final payment deadline.</li>
           <div className="circle1"></div>
           <div className="circle2"></div>
         </div>
       </div>
-      <h1 id="reg-fee" data-aos="fade-up">
-        Registration Fees
-      </h1>
+
+      {/* ── STEP 1: Registration Fees Table ─────────────────────── */}
+      <h1 id="reg-fee" data-aos="fade-up">Registration Fees</h1>
       <p data-aos="fade-up" style={{ color: "#FF6347", fontWeight: "600" }}>
         *Note: Additional charges may apply for Scopus publication (T&C Apply)
       </p>
@@ -431,200 +362,30 @@ const Registration = () => {
           <ul>
             <li>Categories</li>
             <li>Early Bird (USD)</li>
-            <li>Final<br/> (USD)</li>
+            <li>Final<br />( USD)</li>
             <li>On Spot (USD)</li>
           </ul>
           <ul>
-            <li>Academicians / Delegates / Research scholars / PhD Student</li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="399"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              399
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="449"
-                onChange={handleFeeChange}
-              />{" "}
-              449
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="549"
-                onChange={handleFeeChange}
-              />{" "}
-              549
-            </li>
+            <li>Academicians / Delegates / Research scholars / PhD Candidates</li>
+            <li className="line-through text-gray-400"><input type="radio" name="fee" value="380" disabled onChange={handleFeeChange} /> 380</li>
+            <li><input type="radio" name="fee" value="420" onChange={handleFeeChange} /> 420</li>
+            <li><input type="radio" name="fee" value="500" onChange={handleFeeChange} /> 500</li>
           </ul>
           <ul>
-            <li>
-              Academicians / Delegates / Research scholars / PhD Student with
-              Scopus publication
-            </li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="849"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              849
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="899"
-                onChange={handleFeeChange}
-              />{" "}
-              899
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="999"
-                onChange={handleFeeChange}
-              />{" "}
-              999
-            </li>
+            <li>UG/PG Students</li>
+            <li className="line-through text-gray-400"><input type="radio" name="fee" value="360" disabled onChange={handleFeeChange} /> 360</li>
+            <li><input type="radio" name="fee" value="400" onChange={handleFeeChange} /> 400</li>
+            <li><input type="radio" name="fee" value="450" onChange={handleFeeChange} /> 450</li>
           </ul>
           <ul>
-            <li>
-              Students<span>*</span>
-            </li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="349"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              349
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="399"
-                onChange={handleFeeChange}
-              />{" "}
-              399
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="499"
-                onChange={handleFeeChange}
-              />{" "}
-              499
-            </li>
+            <li>Non-Presenter/Attendee/Listener</li>
+            <li className="line-through text-gray-400"><input type="radio" name="fee" value="230" disabled onChange={handleFeeChange} /> 230</li>
+            <li><input type="radio" name="fee" value="250" onChange={handleFeeChange} /> 250</li>
+            <li><input type="radio" name="fee" value="350" onChange={handleFeeChange} /> 350</li>
           </ul>
-          <ul>
-            <li>
-              Student with Scopus publication<span>*</span>
-            </li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="749"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              749
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="799"
-                onChange={handleFeeChange}
-              />{" "}
-              799
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="899"
-                onChange={handleFeeChange}
-              />{" "}
-              899
-            </li>
-          </ul>
-          <ul>
-            <li>In-Person attendance/Listener (Non-Presenter)</li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="199"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              199
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="249"
-                onChange={handleFeeChange}
-              />{" "}
-              249
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="349"
-                onChange={handleFeeChange}
-              />{" "}
-              349
-            </li>
-          </ul>
-          <h1>Physical/On-site Conference Presentation with Q1/Q2 Scopus</h1>
-          <ul>
-            <li>Presentation with Q1 Scopus Publication</li>
-            <li>
-              <label>
-                <input
-                  type="radio"
-                  name="fee"
-                  value="2499"
-                  onChange={handleFeeChange}
-                />
-                $2499
-              </label>
-            </li>
-          </ul>
-          <ul>
-            <li>Presentation with Q2 Scopus Publication</li>
-            <li>
-              <label>
-                <input
-                  type="radio"
-                  name="fee"
-                  value="1499"
-                  onChange={handleFeeChange}
-                />
-                $1499
-              </label>
-            </li>
-          </ul>
+         
+          
+          
         </div>
 
         <div data-aos="fade-left" data-aos-anchor-placement="top-bottom">
@@ -632,160 +393,46 @@ const Registration = () => {
           <ul>
             <li>Categories</li>
             <li>Early Bird (USD)</li>
-            <li>Final<br/> (USD)</li>
+            <li>Final<br />(USD)</li>
           </ul>
           <ul>
-            <li>Academicians / Delegates / Research scholars / PhD Student</li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="299"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              299
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="349"
-                onChange={handleFeeChange}
-              />{" "}
-              349
-            </li>
+            <li>Academicians / Delegates / Research scholars / PhD Candidates</li>
+            <li className="line-through text-gray-400"><input type="radio" name="fee" value="150" disabled onChange={handleFeeChange} /> 150</li>
+            <li><input type="radio" name="fee" value="200" onChange={handleFeeChange} /> 200</li>
           </ul>
           <ul>
-            <li>
-              Academicians / Delegates / Research scholars / PhD Student with
-              Scopus publication
-            </li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="799"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              799
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="849"
-                onChange={handleFeeChange}
-              />{" "}
-              849
-            </li>
+            <li>UG/PG Students</li>
+            <li className="line-through text-gray-400"><input type="radio" name="fee" value="100" disabled onChange={handleFeeChange} /> 100</li>
+            <li><input type="radio" name="fee" value="150" onChange={handleFeeChange} /> 150</li>
           </ul>
           <ul>
-            <li>
-              Students<span>*</span>
-            </li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="269"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              269
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="299"
-                onChange={handleFeeChange}
-              />{" "}
-              299
-            </li>
+            <li>Non-Presenter/Attendee/Listener</li>
+            <li className="line-through text-gray-400"><input type="radio" name="fee" value="90" disabled onChange={handleFeeChange} /> 90</li>
+            <li><input type="radio" name="fee" value="100" onChange={handleFeeChange} /> 100</li>
           </ul>
-          <ul>
-            <li>
-              Student with Scopus publication<span>*</span>
-            </li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="699"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              699
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="749"
-                onChange={handleFeeChange}
-              />{" "}
-              749
-            </li>
-          </ul>
-          <ul>
-            <li>In-Person attendance/Listener (Non-Presenter)</li>
-            <li className="line-through text-gray-400">
-              <input
-                type="radio"
-                name="fee"
-                value="119"
-                disabled
-                onChange={handleFeeChange}
-              />{" "}
-              119
-            </li>
-            <li>
-              <input
-                type="radio"
-                name="fee"
-                value="149"
-                onChange={handleFeeChange}
-              />{" "}
-              149
-            </li>
-          </ul>
-          <h1>Online/Virtual Conference Presentation with Q1/Q2 Scopus</h1>
-          <ul>
-            <li>Presentation with Q1 Scopus Publication</li>
-            <li>
-              <label>
-                <input
-                  type="radio"
-                  name="fee"
-                  value="2349"
-                  onChange={handleFeeChange}
-                />
-                $2349
-              </label>
-            </li>
-          </ul>
-          <ul>
-            <li>Presentation with Q2 Scopus Publication</li>
-            <li>
-              <label>
-                <input
-                  type="radio"
-                  name="fee"
-                  value="1349"
-                  onChange={handleFeeChange}
-                />
-                $1349
-              </label>
-            </li>
-          </ul>
+          
+          
         </div>
-        <p>
-          *Indicates - UG students (You have to submit a soft copy of your
-          university/college identity card as a proof)
-        </p>
+        <p>*Indicates - UG/PG students (You have to submit a soft copy of your university/college identity card as a proof)</p>
       </section>
+
+      {/* ── STEP 2: Journal Publication Support ─────────────────── */}
+        <div className="px-4 md:px-8 lg:px-10 mt-4">
+          <JournalSupport
+            selectedJournal={selectedJournal}
+            setSelectedJournal={setSelectedJournal}
+          />
+        </div>
+
+      {/* ── STEP 3: Add-ons ─────────────────────────────────────── */}
+        <div className="px-4 md:px-8 lg:px-10">
+          <Addons
+            selectedAddons={selectedAddons}
+            setSelectedAddons={setSelectedAddons}
+          />
+        </div>
+
+      {/* ── STEP 4: Registration Form + Pricing ─────────────────── */}
       <h1 id="reg-title" data-aos="fade-up" className="pt-8">
         Online Registration Form
       </h1>
@@ -796,14 +443,8 @@ const Registration = () => {
       >
         <section className="registration-reg">
           <div className="reg-row">
-            <select
-              className="reg-input title-select"
-              name="Title"
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select Title
-              </option>
+            <select className="reg-input title-select" name="Title" defaultValue="">
+              <option value="" disabled>Select Title</option>
               <option>Mr</option>
               <option>Ms</option>
               <option>Mrs</option>
@@ -812,86 +453,31 @@ const Registration = () => {
             </select>
           </div>
           <div className="reg-row">
-            <input
-              type="text"
-              name="first_name"
-              className="reg-input first-name"
-              placeholder="First Name"
-              required
-            />
+            <input type="text" name="first_name" className="reg-input" placeholder="First Name" required />
           </div>
           <div className="reg-row">
-            <input
-              type="text"
-              name="last_name"
-              className="reg-input last-name"
-              placeholder="Last Name"
-              required
-            />
+            <input type="text" name="last_name" className="reg-input" placeholder="Last Name" required />
           </div>
           <div className="reg-row">
-            <input
-              type="text"
-              name="certificate_name"
-              className="reg-input certificate-name"
-              placeholder="Certificate Name"
-              required
-            />
+            <input type="text" name="certificate_name" className="reg-input" placeholder="Certificate Name" required />
           </div>
           <div className="reg-row">
-            <input
-              type="date"
-              name="DOB"
-              className="reg-input dob"
-              placeholder="Date of Birth"
-              max="2020-01-01"
-              required
-            />
+            <input type="date" name="DOB" className="reg-input" placeholder="Date of Birth" max="2020-01-01" required />
           </div>
           <div className="reg-row">
-            <input
-              type="text"
-              name="nationality"
-              className="reg-input nationality"
-              placeholder="Nationality"
-              required
-            />
+            <input type="text" name="nationality" className="reg-input" placeholder="Nationality" required />
           </div>
           <div className="reg-row">
-            <input
-              type="text"
-              name="department"
-              className="reg-input department"
-              placeholder="Department"
-              required
-            />
+            <input type="text" name="department" className="reg-input" placeholder="Department" required />
           </div>
           <div className="reg-row">
-            <input
-              type="text"
-              name="institution"
-              className="reg-input institution"
-              placeholder="Institution"
-              required
-            />
+            <input type="text" name="institution" className="reg-input" placeholder="Institution" required />
           </div>
           <div className="reg-row">
-            <input
-              type="tel"
-              name="number"
-              className="reg-input mobile-number"
-              placeholder="Mobile Number with Country Code"
-              required
-            />
+            <input type="tel" name="number" className="reg-input" placeholder="Mobile Number with Country Code" required />
           </div>
           <div className="reg-row">
-            <input
-              type="email"
-              name="email"
-              className="reg-input email"
-              placeholder="E-mail"
-              required
-            />
+            <input type="email" name="email" className="reg-input" placeholder="E-mail" required />
           </div>
           <div className="reg-row">
             <select
@@ -900,9 +486,7 @@ const Registration = () => {
               defaultValue=""
               onChange={handleParticipantCategoryChange}
             >
-              <option value="" disabled>
-                Select Participant Category
-              </option>
+              <option value="" disabled>Select Participant Category</option>
               <option>Academicians</option>
               <option>Delegates</option>
               <option>Research scholars</option>
@@ -910,49 +494,17 @@ const Registration = () => {
             </select>
           </div>
           <div className="reg-row col">
-            <span>presentation Category :</span>
+            <span>Presentation Category:</span>
             <div className="radio reg-radio">
-              <label>
-                <input
-                  type="radio"
-                  name="presentation_Category"
-                  value="oral"
-                  className="form-radio"
-                />
-                Oral
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="presentation_Category"
-                  value="poster"
-                  className="form-radio"
-                />
-                Poster
-              </label>
+              <label><input type="radio" name="presentation_Category" value="oral" className="form-radio" />Oral</label>
+              <label><input type="radio" name="presentation_Category" value="poster" className="form-radio" />Poster</label>
             </div>
           </div>
           <div className="reg-row col">
-            <span>presentation Type :</span>
+            <span>Presentation Type:</span>
             <div className="radio reg-radio">
-              <label>
-                <input
-                  type="radio"
-                  name="presentation_Type"
-                  value="Virtual"
-                  className="form-radio"
-                />
-                Virtual
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="presentation_Type"
-                  value="Physical"
-                  className="form-radio"
-                />
-                Physical
-              </label>
+              <label><input type="radio" name="presentation_Type" value="Virtual" className="form-radio" />Virtual</label>
+              <label><input type="radio" name="presentation_Type" value="Physical" className="form-radio" />Physical</label>
             </div>
           </div>
         </section>
@@ -966,19 +518,13 @@ const Registration = () => {
                   <h3 className="membership-title">
                     Premium Membership ({participantCategory?.toLowerCase().includes("student") ? "15" : "20"} USD)
                   </h3>
-                  <p className="membership-desc">
-                    Get 5% discount on registration fee
-                  </p>
+                  <p className="membership-desc">Get 5% discount on registration fee</p>
                   <p className="membership-fee">
                     Fee: ${participantCategory?.toLowerCase().includes("student") ? "15" : "20"}
                   </p>
                 </div>
                 <label className="toggle-switch">
-                  <input 
-                    type="checkbox" 
-                    checked={hasMembership} 
-                    onChange={handleMembershipToggle}
-                  />
+                  <input type="checkbox" checked={hasMembership} onChange={handleMembershipToggle} />
                   <span className="toggle-slider"></span>
                 </label>
               </div>
@@ -1015,11 +561,7 @@ const Registration = () => {
                       <p className="coupon-desc">{appliedCoupon.description}</p>
                     )}
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleCouponRemove}
-                    className="coupon-remove-btn"
-                  >
+                  <button type="button" onClick={handleCouponRemove} className="coupon-remove-btn">
                     Remove
                   </button>
                 </div>
@@ -1032,11 +574,43 @@ const Registration = () => {
             <div className="pricing-breakdown">
               <h3 className="pricing-title">Price Breakdown</h3>
 
+              {/* Base registration fee */}
               <div className="pricing-row">
                 <span>Base Registration Fee:</span>
-                <span>${pricing.baseAmount}</span>
+                <span>${pricing.registrationBase ?? pricing.baseAmount}</span>
               </div>
 
+              {/* Journal support row */}
+              {pricing.journalAmount > 0 && (
+                <div className="pricing-row">
+                  <span>Journal Support ({selectedJournal?.tier}):</span>
+                  <span>+ ${pricing.journalAmount.toLocaleString()}</span>
+                </div>
+              )}
+
+              {/* Add-ons row */}
+              {pricing.addonsAmount > 0 && (
+                <div className="pricing-row">
+                  <span>Add-ons ({selectedAddons.length} selected):</span>
+                  <span>+ ${pricing.addonsAmount}</span>
+                </div>
+              )}
+
+              {/* Combined subtotal — only when journal or addons present */}
+              {(pricing.journalAmount > 0 || pricing.addonsAmount > 0) && (
+                <div className="pricing-row" style={{ borderTop: "1px dashed #e0e0e0", paddingTop: "8px", marginTop: "4px" }}>
+                  <span>Combined Subtotal:</span>
+                  <span>
+                    ${(
+                      (pricing.registrationBase ?? pricing.baseAmount) +
+                      pricing.journalAmount +
+                      pricing.addonsAmount
+                    ).toLocaleString()}
+                  </span>
+                </div>
+              )}
+
+              {/* Discounts */}
               {(hasMembership || appliedCoupon) && (
                 <>
                   {hasMembership && appliedCoupon ? (
