@@ -12,7 +12,7 @@ import Instructions from "./Instructions/Instructions.jsx";
 import Terms from "./Terms/Terms.jsx";
 import Venue from "./Venue/Venue.jsx";
 import Partner from "./Partner/Partner.jsx";
-import FAQ from "./FAQ/FAQ.JSX";
+import FAQ from "./FAQ/FAQ.jsx";
 import Essential from "./Essential/Essential.jsx";
 import Paper from "./Callforpaper/Paper.jsx";
 import Organizer from "./Organizer/Organizer.jsx";
